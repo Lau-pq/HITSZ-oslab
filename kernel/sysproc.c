@@ -93,18 +93,18 @@ uint64 sys_yield(void) {
   printf("Current running process pid is %d and user pc is %p\n", p->pid, p->trapframe->epc);
   release(&p->lock);
 
-  for (struct proc *pp = p+1; pp != p; pp++) {
-      if (pp == &proc[NPROC]) {
-        pp = proc;
+  for (struct proc *np = p+1; np != p; np++) {
+      if (np == &proc[NPROC]) {
+        np = proc;
       }
-      acquire(&pp->lock);
-      if (pp->state == RUNNABLE) {
-        printf("Next runnable process pid is %d and user pc is %p\n", pp->pid, pp->trapframe->epc);
-        release(&pp->lock);
+      acquire(&np->lock);
+      if (np->state == RUNNABLE) {
+        printf("Next runnable process pid is %d and user pc is %p\n", np->pid, np->trapframe->epc);
+        release(&np->lock);
         found = 1;
         break;
       } else {
-        release(&pp->lock);
+        release(&np->lock);
       }
     }
   
