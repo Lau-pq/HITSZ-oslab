@@ -45,6 +45,7 @@ w_mepc(uint64 x)
 #define SSTATUS_UPIE (1L << 4) // User Previous Interrupt Enable
 #define SSTATUS_SIE (1L << 1)  // Supervisor Interrupt Enable
 #define SSTATUS_UIE (1L << 0)  // User Interrupt Enable
+#define SSTATUS_SUM (1L << 18)
 
 static inline uint64
 r_sstatus()
@@ -356,6 +357,8 @@ sfence_vma()
 #define PXMASK          0x1FF // 9 bits
 #define PXSHIFT(level)  (PGSHIFT+(9*(level)))
 #define PX(level, va) ((((uint64) (va)) >> PXSHIFT(level)) & PXMASK)
+#define MAXLEVEL        2
+#define SHAREL1NUM       96
 
 // one beyond the highest possible virtual address.
 // MAXVA is actually one bit less than the max allowed by
